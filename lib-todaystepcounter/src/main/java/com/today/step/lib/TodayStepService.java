@@ -1,5 +1,8 @@
 package com.today.step.lib;
 
+import static com.today.step.lib.SportStepJsonUtils.getCalorieByStep;
+import static com.today.step.lib.SportStepJsonUtils.getDistanceByStep;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -32,9 +35,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.today.step.lib.SportStepJsonUtils.getCalorieByStep;
-import static com.today.step.lib.SportStepJsonUtils.getDistanceByStep;
-
 public class TodayStepService extends Service implements Handler.Callback {
 
     private static final String TAG = "TodayStepService";
@@ -65,7 +65,6 @@ public class TodayStepService extends Service implements Handler.Callback {
      * 刷新通知栏步数
      */
     private static final int HANDLER_WHAT_REFRESH_NOTIFY_STEP = 2;
-
 
     /**
      * 如果走路如果停止，10秒钟后保存数据库
@@ -133,7 +132,6 @@ public class TodayStepService extends Service implements Handler.Callback {
             }
             case HANDLER_WHAT_REFRESH_NOTIFY_STEP: {
                 //刷新通知栏
-
                 updateTodayStep(CURRENT_STEP);
 
                 sHandler.removeMessages(HANDLER_WHAT_REFRESH_NOTIFY_STEP);
@@ -152,8 +150,7 @@ public class TodayStepService extends Service implements Handler.Callback {
 
         mTodayStepDBHelper = TodayStepDBHelper.factory(getApplicationContext());
 
-        mSensorManager = (SensorManager) this
-                .getSystemService(SENSOR_SERVICE);
+        mSensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
 
         initNotification(CURRENT_STEP);
 
@@ -200,7 +197,6 @@ public class TodayStepService extends Service implements Handler.Callback {
     }
 
     private synchronized void initNotification(int currentStep) {
-
         nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         int smallIcon = getResources().getIdentifier("icon_step_small", "mipmap", getPackageName());
         if (0 == smallIcon) {
@@ -252,7 +248,6 @@ public class TodayStepService extends Service implements Handler.Callback {
         map.put("current_step", String.valueOf(CURRENT_STEP));
         JLoggerWraper.onEventInfo(this, JLoggerConstant.JLOGGER_SERVICE_ONBIND, map);
 
-
         sHandler.removeMessages(HANDLER_WHAT_REFRESH_NOTIFY_STEP);
         sHandler.sendEmptyMessageDelayed(HANDLER_WHAT_REFRESH_NOTIFY_STEP, REFRESH_NOTIFY_STEP_DURATION);
 
@@ -260,7 +255,6 @@ public class TodayStepService extends Service implements Handler.Callback {
     }
 
     private void startStepDetector() {
-
         //android4.4以后如果有stepcounter可以使用计步传感器
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && getStepCounter()) {
             addStepCounterListener();
@@ -293,7 +287,6 @@ public class TodayStepService extends Service implements Handler.Callback {
     }
 
     private void addBasePedoListener() {
-
         if (null != mStepDetector) {
             WakeLockUtils.getLock(this);
             CURRENT_STEP = mStepDetector.getCurrentStep();
@@ -414,13 +407,10 @@ public class TodayStepService extends Service implements Handler.Callback {
 
     private boolean getStepCounter() {
         Sensor countSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-        if (null == countSensor) {
-            return false;
-        }
-        return true;
+        return null != countSensor;
     }
 
-    private OnStepCounterListener mOnStepCounterListener = new OnStepCounterListener() {
+    private final OnStepCounterListener mOnStepCounterListener = new OnStepCounterListener() {
         @Override
         public void onChangeStepCounter(int step) {
 

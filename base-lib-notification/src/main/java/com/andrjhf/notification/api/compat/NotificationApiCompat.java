@@ -13,9 +13,7 @@ import android.support.v7.app.NotificationCompat;
 import android.text.TextUtils;
 
 public class NotificationApiCompat {
-
     private static final String TAG = "NotificationApiCompat";
-
     private final NotificationManager manager;
     private Notification mNotification;
     private final Notification.Builder mBuilder26;
@@ -34,7 +32,6 @@ public class NotificationApiCompat {
 
     public void startForeground(Service service, int id) {
         service.startForeground(id, mNotification);
-
     }
 
     public void stopForeground(Service service) {
@@ -45,7 +42,7 @@ public class NotificationApiCompat {
         manager.notify(id, mNotification);
     }
 
-    public void updateNotification( int id, String title, String text) {
+    public void updateNotification(int id, String title, String text) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (!TextUtils.isEmpty(text)) {
                 mBuilder26.setContentText(text);
@@ -64,11 +61,9 @@ public class NotificationApiCompat {
             mNotification = mBuilder25.build();
         }
         manager.notify(id, mNotification);
-
     }
 
     public static final class Builder {
-
         private Context mContext;
         private String mChannelId;
         private Notification mNotification;
@@ -210,9 +205,6 @@ public class NotificationApiCompat {
 
         /**
          * 大于等于Android 8.0 api>=26
-         *
-         * @param title
-         * @param content
          * @return
          */
         @TargetApi(Build.VERSION_CODES.O)
@@ -222,9 +214,6 @@ public class NotificationApiCompat {
 
         /**
          * 小于Android 8.0 api<26
-         *
-         * @param title
-         * @param content
          * @return
          */
         private android.support.v4.app.NotificationCompat.Builder getNotification_25(Context context) {

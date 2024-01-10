@@ -4,12 +4,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -19,7 +19,6 @@ import com.today.step.lib.TodayStepManager;
 import com.today.step.lib.TodayStepService;
 
 public class MainActivity extends AppCompatActivity {
-
     private static String TAG = "MainActivity";
 
     private static final int REFRESH_STEP_WHAT = 0;
@@ -62,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 mDelayHandler.sendEmptyMessageDelayed(REFRESH_STEP_WHAT, TIME_INTERVAL_REFRESH);
-
             }
 
             @Override
@@ -72,12 +70,10 @@ public class MainActivity extends AppCompatActivity {
         }, Context.BIND_AUTO_CREATE);
 
         //计时器
-        mhandmhandlele.post(timeRunable);
-
+        mhandmhandlele.post(timeRunnable);
     }
 
     class TodayStepCounterCall implements Handler.Callback {
-
         @Override
         public boolean handleMessage(Message msg) {
             switch (msg.what) {
@@ -96,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     mDelayHandler.sendEmptyMessageDelayed(REFRESH_STEP_WHAT, TIME_INTERVAL_REFRESH);
-
                     break;
                 }
             }
@@ -108,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
         Log.e(TAG, "updateStepCount : " + mStepSum);
         TextView stepTextView = (TextView) findViewById(R.id.stepTextView);
         stepTextView.setText(mStepSum + "步");
-
     }
 
     public void onClick(View view) {
@@ -130,12 +124,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     /*****************计时器*******************/
-    private Runnable timeRunable = new Runnable() {
+    private final Runnable timeRunnable = new Runnable() {
         @Override
         public void run() {
-
             currentSecond = currentSecond + 1000;
             timeTextView.setText(getFormatHMS(currentSecond));
             if (!isPause) {
@@ -145,10 +137,10 @@ public class MainActivity extends AppCompatActivity {
         }
     };
     //计时器
-    private Handler mhandmhandlele = new Handler();
+    private final Handler mhandmhandlele = new Handler();
     private boolean isPause = false;//是否暂停
     private long currentSecond = 0;//当前毫秒数
-/*****************计时器*******************/
+    /*****************计时器*******************/
 
     /**
      * 根据毫秒返回时分秒

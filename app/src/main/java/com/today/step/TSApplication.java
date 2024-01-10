@@ -57,9 +57,10 @@ public class TSApplication extends Application {
 
     /**
      * app是否在前台
+     *
      * @return true前台，false后台
      */
-    public boolean isForeground(){
+    public boolean isForeground() {
         return appCount > 0;
     }
 

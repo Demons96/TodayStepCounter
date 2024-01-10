@@ -1,22 +1,15 @@
 ext.change = [
-
         code           : 100,
         name           : '1.1.0',
-
 ]
 
 ext.versions = [
-
         minSdk                       : 15,
         targetSdk                    : 26,
         compileSdk                   : 26,
-
         buildTools                   : '26.0.2',
-
         applicationId                : "com.today.step",
-
         androidGradlePlugin          : '3.2.1',
-
         supportLibs                  : '26.1.0',
 ]
 

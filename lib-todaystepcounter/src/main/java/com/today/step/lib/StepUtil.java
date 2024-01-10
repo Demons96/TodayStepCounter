@@ -10,7 +10,6 @@ public class StepUtil {
      * @return true可以上传，false不能上传
      */
     public static boolean isUploadStep() {
-
         Date curDate = new Date(System.currentTimeMillis());
 
         long mills2355 = DateUtils.getDateMillis(DateUtils.getCurrentDate("yyyy-MM-dd") + " 23:55:50", "yyyy-MM-dd HH:mm:ss");

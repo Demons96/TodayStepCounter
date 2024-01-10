@@ -14,12 +14,10 @@ public class TodayStepBootCompleteReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
         try {
             Intent todayStepIntent = new Intent(context, TodayStepService.class);
             todayStepIntent.putExtra(TodayStepService.INTENT_NAME_BOOT, true);
             ContextCompat.startForegroundService(context,todayStepIntent);
-
         } catch (Exception e) {
             e.printStackTrace();
 //            https://stackoverflow.com/questions/38764497/security-exception-unable-to-start-service-user-0-is-restricted
